@@ -1,0 +1,8 @@
+[
+	/*{ "keys": ["shift+enter"], "command": "move", "args": {"by": "characters", "forward": true}, "context": 
+	 [
+	  { "key": "following_text", "operator": "regex_match", "operand": "[\"')}](.|$)", "match_all": true  } 
+	 ]
+	}*/
+	{ "keys": ["shift+enter"], "command": "move", "args": {"by": "subword_ends", "forward": true} }
+]
