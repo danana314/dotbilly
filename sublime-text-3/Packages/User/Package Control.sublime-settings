@@ -12,6 +12,9 @@
 		"SideBarEnhancements",
 		"SublimeCodeIntel",
 		"SublimeLinter",
+		"SublimeLinter-annotations",
+		"SublimeLinter-jshint",
+		"SublimeLinter-pylint",
 		"SublimeREPL",
 		"Terminal"
 	]
