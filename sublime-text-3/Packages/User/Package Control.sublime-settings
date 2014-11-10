@@ -2,11 +2,16 @@
 	"installed_packages":
 	[
 		"Alignment",
+		"AlignTab",
 		"BracketHighlighter",
 		"ColorPicker",
+		"EasyMotion",
+		"Emmet",
 		"Git",
 		"GitGutter",
 		"Jade",
+		"Nettuts+ Fetch",
+		"Origami",
 		"Predawn",
 		"SFTP",
 		"SideBarEnhancements",
@@ -16,6 +21,7 @@
 		"SublimeLinter-jshint",
 		"SublimeLinter-pylint",
 		"SublimeREPL",
-		"Terminal"
+		"Terminal",
+		"Vintageous"
 	]
 }

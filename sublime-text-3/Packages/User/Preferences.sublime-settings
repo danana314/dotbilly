@@ -3,7 +3,9 @@
 	"font_size": 10,
 	"ignored_packages":
 	[
+		"Vintageous",
 		"Vintage"
 	],
-	"theme": "predawn.sublime-theme"
+	"theme": "predawn.sublime-theme",
+	"vintageous_use_ctrl_keys": true
 }
