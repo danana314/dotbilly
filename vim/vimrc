@@ -17,6 +17,7 @@ Plug 'preservim/nerdtree'
 Plug 'https://github.com/vim-scripts/mru.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'severin-lemaignan/vim-minimap'
 
 Plug 'tmhedberg/SimpylFold'
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -71,8 +72,10 @@ nnoremap <C-l> <C-w>l
 " Clear match highlighting
 noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 
-" Let ctrlp have up to 30 results.
+" Limit ctrlp results
 let g:ctrlp_max_height = 30
+
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
