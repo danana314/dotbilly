@@ -9,15 +9,16 @@ endif
 
 call plug#begin()
 
-Plug 'tpope/vim-sensible'
+"Plug 'tpope/vim-sensible'
 
 Plug 'mileszs/ack.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'preservim/nerdtree'
-Plug 'https://github.com/vim-scripts/mru.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'severin-lemaignan/vim-minimap'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 Plug 'tmhedberg/SimpylFold'
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -51,6 +52,17 @@ set noswapfile " They're just annoying. Who likes them?
 set hidden " allow me to have buffers with unsaved changes.
 set autoread " when a file has changed on disk, just load it. Don't ask.
 
+" Turn on the Wild menu
+set wildmenu
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=.git\*,.hg\*,.svn\*
+else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+endif
+
 " Make search more sane
 set ignorecase " case insensitive search
 set smartcase " If there are uppercase letters, become case-sensitive.
@@ -69,13 +81,30 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Close the current buffer
+map <leader>bd :Bclose<cr>:tabclose<cr>gT
+
+" Close all the buffers
+map <leader>ba :bufdo bd<cr>
+
+map <leader>l :bnext<cr>
+map <leader>h :bprevious<cr>
+
+" Quick buffer switching - like cmd-tab'ing
+"nnoremap <leader><leader> <c-^>
+
 " Clear match highlighting
 noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 
 " Limit ctrlp results
-let g:ctrlp_max_height = 30
+let g:ctrlp_max_height = 20
 
-nnoremap <leader>jd :YcmCompleter GoTo<CR>
+noremap <leader>jd :YcmCompleter GoTo<CR>
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -96,5 +125,17 @@ if has("autocmd")
     autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
 
-colorscheme peaksea
+set t_Co=256
+set termguicolors
+colorscheme afterglow
+let g:airline_theme='minimalist'
 set background=dark
+let &t_ut=''
+
+
+
+let g:NERDTreeWinSize=30
+nmap <C-b> :NERDTreeToggle<CR>
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
