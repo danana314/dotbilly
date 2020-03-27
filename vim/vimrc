@@ -1,6 +1,7 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible    " be iMproved, required
+filetype off        " required
 
+" auto-install vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -9,16 +10,17 @@ endif
 
 call plug#begin()
 
-"Plug 'tpope/vim-sensible'
-
 Plug 'mileszs/ack.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-fugitive'
-Plug 'terryma/vim-multiple-cursors'
+"Plug 'terryma/vim-multiple-cursors'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
+
+Plug 'flazz/vim-colorschemes'
 
 Plug 'tmhedberg/SimpylFold'
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -26,77 +28,94 @@ Plug 'dense-analysis/ale'
 Plug 'tpope/vim-commentary'
 Plug 'ycm-core/YouCompleteMe'
 
-Plug 'flazz/vim-colorschemes'
-
 call plug#end()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 filetype plugin indent on
 syntax on
+set nobackup      " we have vcs, we don't need backups.
+set nowritebackup " we have vcs, we don't need backups.
+set noswapfile
 
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab " use spaces instead of tabs.
-set smarttab " let's tab key insert 'tab stops', and bksp deletes tabs.
-set shiftround " tab / shifting moves to closest tabstop.
-set autoindent " Match indents on new lines.
-set smartindent " Intellegently dedent / indent new lines based on rules.
-set number
+let mapleader = ","
 
-" We have VCS -- we don't need this stuff.
-set nobackup " We have vcs, we don't need backups.
-set nowritebackup " We have vcs, we don't need backups.
-set noswapfile " They're just annoying. Who likes them?
+set t_Co=256
+set termguicolors
+let &t_ut=''
+colorscheme afterglow
+set background=dark
 
-" don't nag me when hiding buffers
-set hidden " allow me to have buffers with unsaved changes.
-set autoread " when a file has changed on disk, just load it. Don't ask.
+fun! CleanExtraSpaces()    " delete trailing white space on save
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfun
+if has("autocmd")
+    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+endif
 
-" Turn on the Wild menu
+" wildmenu
 set wildmenu
-
-" Ignore compiled files
-set wildignore=*.o,*~,*.pyc
+set wildignore=*.o,*~,*.pyc    " ignore compiled files
 if has("win16") || has("win32")
     set wildignore+=.git\*,.hg\*,.svn\*
 else
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
-" Make search more sane
-set ignorecase " case insensitive search
-set smartcase " If there are uppercase letters, become case-sensitive.
-set incsearch " live incremental searching
-set showmatch " live match highlighting
-set hlsearch " highlight matches
-set gdefault " use the `g` flag by default.
+" search
+set ignorecase    " case insensitive search
+set smartcase     " If there are uppercase letters, become case-sensitive.
+set incsearch     " live incremental searching
+set showmatch     " live match highlighting
+set hlsearch      " highlight matches
+set gdefault      " use the `g` flag by default.
+noremap <leader><space> :noh<cr>:call clearmatches()<cr>    " clear match highlighting
 
-" leader is a key that allows you to have your own "namespace" of keybindings.
-" You'll see it a lot below as <leader>
-let mapleader = ","
-
-" bindings for easy split nav
+" easier window nav
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
+" dealing with buffers
+set hidden    " allow buffers with unsaved changes.
+set autoread  " when a file has changed on disk, just load it. Don't ask.
 
-" Close all the buffers
-map <leader>ba :bufdo bd<cr>
+nnoremap <leader>ba :bufdo bd<cr>    " close all buffers
+nnoremap <leader>q :bd<cr>           " delete buffer
+nnoremap <leader>l :bnext<cr>
+nnoremap <leader>h :bprevious<cr>
 
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
+cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'close' : 'q')<CR>    " prevent accidental vim exits
 
-" Quick buffer switching - like cmd-tab'ing
-"nnoremap <leader><leader> <c-^>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" editor
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map 0 ^          " remap 0 to first non-blank character
 
-" Clear match highlighting
-noremap <leader><space> :noh<cr>:call clearmatches()<cr>
+set nofoldenable
+set nowrap
 
-" Limit ctrlp results
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab    " use spaces instead of tabs.
+set smarttab     " let's tab key insert 'tab stops', and bksp deletes tabs.
+set shiftround   " tab / shifting moves to closest tabstop.
+set autoindent   " Match indents on new lines.
+set smartindent  " Intellegently dedent / indent new lines based on rules.
+set number
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" plugin customizations
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_max_height = 20
 
 noremap <leader>jd :YcmCompleter GoTo<CR>
@@ -105,37 +124,13 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remap VIM 0 to first non-blank character
-map 0 ^
-
-" Delete trailing white space on save, useful for some filetypes ;)
-fun! CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfun
-
-if has("autocmd")
-    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
-endif
-
-set t_Co=256
-set termguicolors
-colorscheme afterglow
 let g:airline_theme='minimalist'
-set background=dark
-let &t_ut=''
 
-
-
-let g:NERDTreeWinSize=30
+let g:NERDTreeWinSize=35
 nmap <C-b> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
+let g:ackprg = 'ag --nogroup --nocolor --column'
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
