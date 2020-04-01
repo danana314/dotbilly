@@ -129,6 +129,7 @@ bindsym $mod+Shift+e exec i3lock -t -i /home/adnaan/Pictures/astronaut-jellyfish
 # personal shortcuts
 exec setxkbmap -layout us
 exec --no-startup-id feh --bg-scale /home/adnaan/Pictures/astronaut-jellyfish.jpg
+bindsym Print --release exec "scrot -se 'mv $f /tmp &&  xclip -selection clipboard -t image/png -i /tmp/$n && rm /tmp/$n'"
 
 bindsym $mod+KP_End exec pactl set-sink-mute 0 toggle
 bindsym $mod+KP_Down exec pactl set-sink-volume 0 -5%
