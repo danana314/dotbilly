@@ -1,0 +1,30 @@
+command=~/.local/bin/statusbar/$BLOCK_NAME
+separator_block_width=15
+markup=pango
+
+#[weather]
+#label=🌦
+#command=curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo
+#interval=3600
+
+[spotify]
+label=♫
+command=if pacmd list-sink-inputs|grep 'state: RUNNING' -A 15|grep -q 'spotify'; then echo $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -n '/artist/{n;n;p}' | cut -d '"' -f 2) - $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -n '/title/{n;p}' | cut -d '"' -f 2); else echo ''; fi
+interval=once
+signal=10
+interval=10
+
+[volume]
+interval=once
+command=if pacmd list-sinks|grep -A 15 '* index'|awk '/muted:/{ print $2 }' | grep -q yes; then echo '🔇'; else echo 🔊 $(pacmd list-sinks|grep -A 15 '* index'| awk '/volume: front/{ print $5 }' | sed 's/[%|,]//g')%; fi
+signal=10
+
+[time]
+command=echo $(date '+%a %d/%m/%Y %I:%M%p') 🕑
+interval=5
+
+[wifi]
+interval=10
+
+[iface]
+interval=10
