@@ -11,16 +11,20 @@ endif
 call plug#begin()
 
 Plug 'mileszs/ack.vim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 Plug 'tpope/vim-fugitive'
-"Plug 'terryma/vim-multiple-cursors'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'francoiscabrol/ranger.vim'
+" Plug 'mcchrish/nnn.vim'
 
 Plug 'flazz/vim-colorschemes'
+Plug 'junegunn/limelight.vim'
 
 Plug 'tmhedberg/SimpylFold'
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -44,10 +48,11 @@ set noswapfile
 let mapleader = ","
 
 set t_Co=256
-set termguicolors
+" set termguicolors
 let &t_ut=''
 colorscheme afterglow
 set background=dark
+hi Normal guibg=NONE ctermbg=NONE
 
 fun! CleanExtraSpaces()    " delete trailing white space on save
     let save_cursor = getpos(".")
@@ -113,10 +118,18 @@ set autoindent   " Match indents on new lines.
 set smartindent  " Intellegently dedent / indent new lines based on rules.
 set number
 
+set cursorline
+" highlight CursorLineNR ctermbg=red
+
+" noremap <Leader>y "*y
+" noremap <Leader>p "*p
+noremap <Leader>y "+y
+noremap <Leader>p "+p
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin customizations
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ctrlp_max_height = 20
+" let g:ctrlp_max_height = 20
 
 noremap <leader>jd :YcmCompleter GoTo<CR>
 
@@ -126,11 +139,24 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_theme='minimalist'
 
-let g:NERDTreeWinSize=35
-nmap <C-b> :NERDTreeToggle<CR>
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+" let g:NERDTreeWinSize=35
+" nmap <C-b> :NERDTreeToggle<CR>
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" let g:NERDTreeHijackNetrw=0
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
+" nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>a :Ag<Space>
+
+nnoremap <Leader>f :Files<CR>
+
+" let g:startify_lists = [  { 'type': 'dir','header': ['   MRU '.getcwd()]}]
+let g:ranger_map_keys = 0
+map <leader>rw :RangerWorkingDirectory<CR>
+map <leader>rf :Ranger<CR>
+
