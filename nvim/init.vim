@@ -89,10 +89,10 @@ set gdefault      " use the `g` flag by default.
 noremap <leader><space> :noh<cr>:call clearmatches()<cr>    " clear match highlighting
 
 " easier window nav
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
 set splitbelow splitright
 
 " dealing with buffers
@@ -101,8 +101,8 @@ set autoread  " when a file has changed on disk, just load it. Don't ask.
 
 nnoremap <leader>ba :bufdo bd<cr>    " close all buffers
 nnoremap <leader>q :bd<cr>           " delete buffer
-nnoremap <leader>l :bnext<cr>
-nnoremap <leader>h :bprevious<cr>
+nnoremap <C-l> :bnext<cr>
+nnoremap <C-h> :bprevious<cr>
 
 cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'close' : 'q')<CR>    " prevent accidental vim exits
 
@@ -123,6 +123,9 @@ set shiftround   " tab / shifting moves to closest tabstop.
 set autoindent   " Match indents on new lines.
 set smartindent  " Intellegently dedent / indent new lines based on rules.
 set number relativenumber
+
+set list
+set listchars+=nbsp:‗
 
 set cursorline
 " highlight CursorLineNR ctermbg=red
@@ -163,7 +166,8 @@ autocmd! User GoyoLeave Limelight!
 let g:ackprg = 'ag --nogroup --nocolor --column'
 cnoreabbrev Ack Ack!
 " nnoremap <Leader>a :Ack!<Space>
-nnoremap <Leader>a :Ag<Space>
+" nnoremap <Leader>a :Ag<Space>
+nnoremap <Leader>a :Ag <C-R><C-W><CR>
 
 nnoremap <Leader>f :Files<CR>
 
@@ -171,4 +175,3 @@ nnoremap <Leader>f :Files<CR>
 let g:ranger_map_keys = 0
 map <leader>rw :RangerWorkingDirectory<CR>
 map <leader>rf :Ranger<CR>
-
