@@ -1,41 +1,27 @@
-set nocompatible    " be iMproved, required
 filetype off        " required
 
-" auto-install vim-plug
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 call plug#begin()
+Plug 'tpope/vim-sensible'
 
-" Plug 'preservim/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'severin-lemaignan/vim-minimap'
-Plug 'vim-airline/vim-airline'
 Plug 'mileszs/ack.vim'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'francoiscabrol/ranger.vim'
-Plug 'rbgrouleff/bclose.vim'
-" Plug 'mcchrish/nnn.vim'
-" Plug 'wellle/targets.vim'
+Plug 'mcchrish/nnn.vim'
+Plug 'wellle/targets.vim'
+Plug 'tpope/vim-commentary'
 
-Plug 'flazz/vim-colorschemes'
+Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'tmhedberg/SimpylFold'
-Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'tpope/vim-commentary'
-Plug 'davidhalter/jedi-vim'
-" Plug 'ycm-core/YouCompleteMe'
-Plug 'dense-analysis/ale'
+Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries' }
 
-Plug 'chrisbra/csv.vim'
+" Plug 'chrisbra/csv.vim'
 call plug#end()
 
 
@@ -52,7 +38,6 @@ set noswapfile
 let mapleader = ","
 
 set t_Co=256
-" set termguicolors
 let &t_ut=''
 colorscheme afterglow
 set background=dark
@@ -82,17 +67,13 @@ endif
 " search
 set ignorecase    " case insensitive search
 set smartcase     " If there are uppercase letters, become case-sensitive.
-set incsearch     " live incremental searching
+" set incsearch     " live incremental searching
 set showmatch     " live match highlighting
 set hlsearch      " highlight matches
 set gdefault      " use the `g` flag by default.
 noremap <leader><space> :noh<cr>:call clearmatches()<cr>    " clear match highlighting
 
 " easier window nav
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
 set splitbelow splitright
 
 " dealing with buffers
@@ -114,12 +95,6 @@ cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'close' : 'q')<CR>    " p
 set nofoldenable
 set nowrap
 
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab    " use spaces instead of tabs.
-set smarttab     " let's tab key insert 'tab stops', and bksp deletes tabs.
-set shiftround   " tab / shifting moves to closest tabstop.
 set autoindent   " Match indents on new lines.
 set smartindent  " Intellegently dedent / indent new lines based on rules.
 set number relativenumber
@@ -128,10 +103,7 @@ set list
 set listchars+=nbsp:‗
 
 set cursorline
-" highlight CursorLineNR ctermbg=red
 
-" noremap <Leader>y "*y
-" noremap <Leader>p "*p
 noremap <Leader>y "+y
 noremap <Leader>p "+p
 
@@ -144,10 +116,6 @@ map <Leader>SS :source ~/.config/nvim/sessions.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:ctrlp_max_height = 20
 
-let g:SimpylFold_fold_import = 0
-
-" noremap <leader>jd :YcmCompleter GoTo<CR>
-
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -157,21 +125,15 @@ let g:airline_theme='minimalist'
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-" let g:NERDTreeWinSize=35
-" nmap <C-b> :NERDTreeToggle<CR>
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" let g:NERDTreeHijackNetrw=0
-
 let g:ackprg = 'ag --nogroup --nocolor --column'
 cnoreabbrev Ack Ack!
-" nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>a :Ack!<Space>
 " nnoremap <Leader>a :Ag<Space>
-nnoremap <Leader>a :Ag <C-R><C-W><CR>
+" nnoremap <Leader>a :Ag <C-R><C-W><CR>
 
 nnoremap <Leader>f :Files<CR>
 
 " let g:startify_lists = [  { 'type': 'dir','header': ['   MRU '.getcwd()]}]
-let g:ranger_map_keys = 0
-map <leader>rw :RangerWorkingDirectory<CR>
-map <leader>rf :Ranger<CR>
+" let g:ranger_map_keys = 0
+" map <leader>rw :RangerWorkingDirectory<CR>
+" map <leader>rf :Ranger<CR>
