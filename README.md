@@ -1,6 +1,6 @@
 # dotbilly
 Setup:
-* neovim
+* neovim + vim-plug
 * nnn
 * silversearcher-ag
 * fzf
