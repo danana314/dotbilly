@@ -1,3 +1,13 @@
+/* palette pulled from wallpaper (duskmountain.jpg) — single blue-teal hue,
+   varied only in lightness/opacity to stay strictly monochrome */
+@define-color bg        rgba(12, 21, 24, 0.55);
+@define-color fill      rgba(75, 133, 155, 0.07);
+@define-color border    rgba(75, 133, 155, 0.28);
+@define-color fg        #E0E8EB;
+@define-color accent    #81C2DA;
+@define-color accent-lo #4B859B;
+@define-color accent-hi #C2E3F0;
+
 * {
     font-family: monospace;
     font-size: 10pt;
@@ -5,49 +15,57 @@
 }
 
 window#waybar {
-    background-color: #2C2C2C;
-    color: #ffffff;
+    background-color: @bg;
+    color: @fg;
 }
 
-#workspaces button {
-    padding: 0 8px;
-    color: #ffffff;
-    background-color: transparent;
-}
-
-#workspaces button.focused {
-    background-color: #00C1FF;
-    color: #000088;
-}
-
-#workspaces button.urgent {
-    background-color: #00C1FF;
-    color: #000088;
-}
-
-#mode {
-    background-color: #00C1FF;
-    color: #000088;
-    padding: 0 8px;
-}
-
+/* every module gets its own outlined, translucent box for delineation */
+#workspaces,
+#mode,
+#window,
 #mpris,
 #pulseaudio,
 #network,
 #battery,
 #tray,
 #clock {
+    margin: 3px 3px;
     padding: 0 10px;
+    background-color: @fill;
+    border: 1px solid @border;
+    border-radius: 6px;
 }
 
-#clock {
-    color: #00C1FF;
+#workspaces {
+    padding: 0 4px;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    color: @fg;
+    background-color: transparent;
+}
+
+#workspaces button.focused {
+    color: @accent-hi;
+    border-bottom: 2px solid @accent;
+}
+
+#workspaces button.urgent {
+    color: @accent-hi;
+    border-bottom: 2px solid @accent-hi;
+}
+
+#mode {
+    color: @fg;
 }
 
 #battery.warning {
-    color: #FFB800;
+    color: @accent;
+    font-weight: 900;
 }
 
 #battery.critical {
-    color: #FF4444;
+    color: @accent-hi;
+    font-weight: 900;
 }

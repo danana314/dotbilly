@@ -24,8 +24,8 @@ bindsym $mod+t exec ghostty
 bindsym $mod+Shift+q kill
 
 # start rofi (program launcher)
-bindsym $mod+d exec rofi -show drun
-bindsym $mod+Shift+d exec rofi -show run
+bindsym $mod+space exec rofi -show drun
+bindsym $mod+Shift+space exec rofi -show run
 
 # change focus
 bindsym $mod+h focus left
@@ -59,10 +59,10 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+g floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+g focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -113,7 +113,7 @@ input type:touchpad {
 }
 
 # wallpaper (replaces `exec feh --bg-scale`, which is X11-only)
-output * bg /home/nani/Pictures/backgrounds/astronaut-jellyfish.webp fill
+output * bg /home/nani/Pictures/backgrounds/duskmountain.jpg fill
 
 # screenshot: full screen, copied to clipboard (replaces scrot, which is X11-only)
 bindsym Print exec grim - | wl-copy
@@ -136,11 +136,12 @@ gaps outer 0
 smart_gaps on
 default_border pixel 1
 
-# Color settings
-client.focused #00C1FF #00C1FF #000088 #00C1FF
-client.focused_inactive #2C2C2C #2C2C2C #ffffff #2C2C2C
-client.unfocused #2C2C2C #2C2C2C #ffffff #2C2C2C
-client.urgent #00C1FF #00C1FF #000088 #00C1FF
+# Color settings — palette pulled from wallpaper (duskmountain.jpg),
+# single blue-teal hue varied by lightness to stay monochrome
+client.focused          #265E73 #0C1518 #E0E8EB #81C2DA
+client.focused_inactive #2B373B #182125 #E0E8EB #2B373B
+client.unfocused        #2B373B #182125 #E0E8EB #2B373B
+client.urgent           #81C2DA #0C1518 #C2E3F0 #C2E3F0
 
 # Do not follow the mouse
 focus_follows_mouse no
