@@ -9,7 +9,7 @@
 @define-color accent-hi #C2E3F0;
 
 * {
-    font-family: monospace;
+    font-family: "Fira Code", monospace;
     font-size: 10pt;
     min-height: 0;
 }
