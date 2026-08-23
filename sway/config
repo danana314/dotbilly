@@ -13,13 +13,19 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec ghostty
+set $term_title dropdown_term
+set $term ghostty --title=$term_title
+set $term_setup swaymsg "[title=\"$term_title\"] floating enable, resize set 63ppt 50ppt, move to scratchpad, border pixel 2"
+exec sh -c '$term & sleep 0.5; $term_setup'
+bindsym $mod+Return exec pgrep -f -- "--title=$term_title" >/dev/null && swaymsg "[title=\"$term_title\"] move position center, scratchpad show" || sh -c '$term & sleep 0.5; $term_setup; swaymsg "[title=\"$term_title\"] move position center, scratchpad show"'
+bindsym $mod+t exec ghostty
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start rofi (program launcher)
-bindsym $mod+d exec rofi -show run
+bindsym $mod+d exec rofi -show drun
+bindsym $mod+Shift+d exec rofi -show run
 
 # change focus
 bindsym $mod+h focus left
