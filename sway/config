@@ -94,7 +94,7 @@ bindsym $mod+Shift+e exec swaylock -i /home/nani/Pictures/backgrounds/astronaut-
 
 # keyboard layout (replaces `exec setxkbmap`, which is X11-only)
 input type:keyboard {
-    xkb_layout us
+    xkb_layout gb
 }
 
 # touchpad: enable tap-to-click, use natural (reversed) scroll direction
