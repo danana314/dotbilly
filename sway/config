@@ -1,0 +1,162 @@
+# Sway config file (v4)
+#
+# Converted from the i3 config. Please see https://i3wm.org/docs/userguide.html
+# for a complete reference on i3-compatible bindings, and `man 5 sway` for
+# Sway-specific directives.
+
+set $mod Mod4
+
+# Font for window titles.
+font pango:monospace 8
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec ghostty
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start rofi (program launcher)
+bindsym $mod+d exec rofi -show run
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split
+bindsym $mod+Shift+v split h
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart sway inplace (preserves your layout/session, can be used to upgrade sway)
+bindsym $mod+Shift+r restart
+# lock the screen
+bindsym $mod+Shift+e exec swaylock -i /home/nani/Pictures/backgrounds/astronaut-jellyfish.webp
+
+# keyboard layout (replaces `exec setxkbmap`, which is X11-only)
+input type:keyboard {
+    xkb_layout us
+}
+
+# touchpad: enable tap-to-click, use natural (reversed) scroll direction
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+    middle_emulation enabled
+    scroll_factor 0.5
+}
+
+# wallpaper (replaces `exec feh --bg-scale`, which is X11-only)
+output * bg /home/nani/Pictures/backgrounds/astronaut-jellyfish.webp fill
+
+# screenshot: full screen, copied to clipboard (replaces scrot, which is X11-only)
+bindsym Print exec grim - | wl-copy
+# screenshot: select a region, copied to clipboard
+bindsym $mod+Print exec grim -g "$(slurp)" - | wl-copy
+
+# hardware media keys: volume
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# hardware media keys: screen brightness
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+
+# gaps / borders
+gaps inner 10
+gaps outer 0
+smart_gaps on
+default_border pixel 1
+
+# Color settings
+client.focused #00C1FF #00C1FF #000088 #00C1FF
+client.focused_inactive #2C2C2C #2C2C2C #ffffff #2C2C2C
+client.unfocused #2C2C2C #2C2C2C #ffffff #2C2C2C
+client.urgent #00C1FF #00C1FF #000088 #00C1FF
+
+# Do not follow the mouse
+focus_follows_mouse no
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym h resize shrink width 10
+        bindsym j resize grow height 10
+        bindsym k resize shrink height 10
+        bindsym l resize grow width 10
+
+        bindsym Left resize shrink width 10
+        bindsym Down resize grow height 10
+        bindsym Up resize shrink height 10
+        bindsym Right resize grow width 10
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# status bar: waybar manages its own bar/tray, so it's launched here instead
+# of via a sway `bar {}` block (that's for swaybar/i3blocks-style bars).
+exec waybar
