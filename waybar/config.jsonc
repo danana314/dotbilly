@@ -21,7 +21,10 @@
 
     "mpris": {
         "format": " {dynamic}",
-        "format-paused": " {dynamic}"
+        "format-paused": " {dynamic}",
+        "dynamic-order": ["title", "artist"],
+        "dynamic-len": 25,
+        "tooltip-format": "{player} : {title} - {artist}"
     },
 
     "pulseaudio": {
