@@ -20,6 +20,20 @@ exec sh -c '$term & sleep 0.5; $term_setup'
 bindsym $mod+Return exec pgrep -f -- "--title=$term_title" >/dev/null && swaymsg "[title=\"$term_title\"] move position center, scratchpad show" || sh -c '$term & sleep 0.5; $term_setup; swaymsg "[title=\"$term_title\"] move position center, scratchpad show"'
 bindsym $mod+t exec ghostty
 
+# scratchpad file manager (nautilus)
+# nautilus has no --name/--class flag, so we match its fixed app_id instead
+set $files_app_id org.gnome.Nautilus
+set $files nautilus
+set $files_setup swaymsg "[app_id=\"$files_app_id\"] floating enable, resize set 63ppt 50ppt, move to scratchpad, border pixel 2"
+exec sh -c '$files & sleep 1; $files_setup'
+bindsym $mod+p exec pgrep -x nautilus >/dev/null && swaymsg "[app_id=\"$files_app_id\"] move position center, scratchpad show" || sh -c '$files & sleep 1; $files_setup; swaymsg "[app_id=\"$files_app_id\"] move position center, scratchpad show"'
+
+# scratchpad terminal file browser (nnn, starting in $HOME)
+set $nnn_title dropdown_nnn
+set $nnn ghostty --title=$nnn_title --working-directory=$HOME -e nnn
+set $nnn_setup swaymsg "[title=\"$nnn_title\"] floating enable, resize set 63ppt 50ppt, move to scratchpad, border pixel 2"
+bindsym $mod+Shift+p exec pgrep -f -- "--title=$nnn_title" >/dev/null && swaymsg "[title=\"$nnn_title\"] move position center, scratchpad show" || sh -c '$nnn & sleep 0.5; $nnn_setup; swaymsg "[title=\"$nnn_title\"] move position center, scratchpad show"'
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
