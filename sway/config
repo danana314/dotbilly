@@ -110,7 +110,11 @@ bindsym $mod+Shift+c reload
 # restart sway inplace (preserves your layout/session, can be used to upgrade sway)
 bindsym $mod+Shift+r restart
 # lock the screen
-bindsym $mod+Shift+e exec swaylock -i /home/nani/Pictures/backgrounds/astronaut-jellyfish.webp
+set $lock swaylock -f -i /home/nani/Pictures/backgrounds/astronaut-jellyfish.webp
+bindsym $mod+Shift+e exec $lock
+
+# idle management: lock at 5m, screen off at 10m, suspend at 20m; always lock before sleep
+exec swayidle -w timeout 300 '$lock' timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' timeout 1200 'systemctl suspend' before-sleep '$lock'
 
 # keyboard layout (replaces `exec setxkbmap`, which is X11-only)
 input type:keyboard {
