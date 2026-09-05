@@ -165,14 +165,15 @@ bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 gaps inner 10
 gaps outer 0
 smart_gaps on
-default_border pixel 2
+default_border pixel 1
 
-# Color settings — palette pulled from wallpaper (duskmountain.jpg),
-# single blue-teal hue varied by lightness to stay monochrome
-client.focused          #265E73 #0C1518 #E0E8EB #81C2DA
-client.focused_inactive #2B373B #182125 #E0E8EB #2B373B
-client.unfocused        #2B373B #182125 #E0E8EB #2B373B
-client.urgent           #81C2DA #0C1518 #C2E3F0 #C2E3F0
+# Color settings — rose-pine palette (matches nvim/ghostty). Fifth field
+# (child_border) is the actual pixel border color; set explicitly since it
+# otherwise defaults to background and barely contrasts between states.
+client.focused          #c4a7e7 #191724 #e0def4 #c4a7e7 #c4a7e7
+client.focused_inactive #524f67 #191724 #e0def4 #524f67 #524f67
+client.unfocused        #26233a #191724 #908caa #26233a #26233a
+client.urgent           #eb6f92 #191724 #e0def4 #eb6f92 #eb6f92
 
 # Do not follow the mouse
 focus_follows_mouse no
