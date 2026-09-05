@@ -34,6 +34,13 @@ set $nnn ghostty --title=$nnn_title --working-directory=$HOME -e nnn
 set $nnn_setup swaymsg "[title=\"$nnn_title\"] floating enable, resize set 63ppt 50ppt, move to scratchpad, border pixel 2"
 bindsym $mod+Shift+p exec pgrep -f -- "--title=$nnn_title" >/dev/null && swaymsg "[title=\"$nnn_title\"] move position center, scratchpad show" || sh -c '$nnn & sleep 0.5; $nnn_setup; swaymsg "[title=\"$nnn_title\"] move position center, scratchpad show"'
 
+# scratchpad music player (tauon, flatpak)
+# tauon has no --name/--class flag, so we match its fixed app_id instead
+set $music_app_id com.github.taiko2k.tauonmb
+set $music flatpak run $music_app_id
+set $music_setup swaymsg "[app_id=\"$music_app_id\"] floating enable, resize set 63ppt 50ppt, move to scratchpad, border pixel 2"
+bindsym $mod+m exec pgrep -x tauonmb >/dev/null && swaymsg "[app_id=\"$music_app_id\"] move position center, scratchpad show" || sh -c '$music & sleep 1; $music_setup; swaymsg "[app_id=\"$music_app_id\"] move position center, scratchpad show"'
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
